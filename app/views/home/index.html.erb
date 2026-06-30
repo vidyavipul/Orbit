@@ -1,0 +1,93 @@
+<div class="home-view">
+  <%= render 'shared/navbar' %>
+<section class="hero-section">
+                <div class="hero-left">
+                    <div class="hero-tag">Internal Team OS</div>
+                    <h1 class="hero-title">Where your team's work comes together.</h1>
+                    <p class="hero-subtitle">
+                        A simple, focused space for your team to track projects, assign tasks, and build momentum. Built
+                        with calm, earthly designs to promote daily focus.
+                    </p>
+                    <div style="display: flex; gap: 16px;">
+                        <button class="btn btn-primary" onclick="switchView('dashboard')">Get Started</button>
+                        <button class="btn btn-outline">See how it works</button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat-item">
+                            <div class="hero-stat-dot"></div> Projects tracked
+                        </div>
+                        <div class="hero-stat-item">
+                            <div class="hero-stat-dot"></div> Tasks completed
+                        </div>
+                        <div class="hero-stat-item">
+                            <div class="hero-stat-dot"></div> Teams active
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-right">
+                    <div class="auth-card">
+                        <h2 class="auth-card-title">Welcome back</h2>
+                        <form onsubmit="event.preventDefault(); switchView('dashboard');">
+                            <div class="auth-form-group">
+                                <label>Email address</label>
+                                <input type="email" class="auth-form-control" placeholder="you@company.com" required value="alex.r@company.com">
+                            </div>
+                            <div class="auth-form-group">
+                                <label>Password</label>
+                                <input type="password" class="auth-form-control" placeholder="••••••••" required value="password123">
+                            </div>
+                            <button type="submit" class="btn btn-cta" style="width: 100%; border-radius: 8px; margin-top: 10px;">Sign In</button>
+                        </form>
+                        <div class="auth-divider">or</div>
+                        <button class="btn btn-outline" style="width: 100%; border-radius: 8px;" onclick="alert('Creating account is deactivated in this demo. Try signing in.')">Create new
+                            account</button>
+                    </div>
+                </div>
+            </section>
+<section class="features-section" id="features">
+                <div class="features-container">
+                    <div class="features-header">
+                        <h2>Built for how real teams work</h2>
+                        <p>Skip the complex setups. Orbit brings clarity to your daily projects and tasks with zero
+                            clutter.</p>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">📁</div>
+                            <h3>Project Oversight</h3>
+                            <p>Create and manage projects with timelines, priorities, and custom status pipelines.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">✓</div>
+                            <h3>Task Delegation</h3>
+                            <p>Assign tasks with due dates, description details, and priorities to your team members.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">🔒</div>
+                            <h3>Role Controls</h3>
+                            <p>Admins, Managers, and Employees each get exactly the interface and permissions they need.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">📊</div>
+                            <h3>Progress Visibility</h3>
+                            <p>Visual dashboards and simple metrics show where every piece of work stands instantly.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">👥</div>
+                            <h3>Team Directory</h3>
+                            <p>Browse team members, review their current workloads, and coordinate assignments.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">💬</div>
+                            <h3>Inline Comments</h3>
+                            <p>Discuss details inside the tasks directly. Keep context where the actual work happens.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section> 
+  <%= render 'shared/footer' %>
+</div>
