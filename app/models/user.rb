@@ -16,7 +16,7 @@ class User < ApplicationRecord
                     length: { maximum: 105 },
                     format: { with: VALID_EMAIL_REGEX }
 
-  enum :role, admin: "admin", manager: "manager", employee: "employee"
+  enum :role, admin: "admin", manager: "manager", employee: "employee", default: :employee
 
   validates :employee_code, presence: true, uniqueness: true
 
