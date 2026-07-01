@@ -16,13 +16,14 @@ class User < ApplicationRecord
                     length: { maximum: 105 },
                     format: { with: VALID_EMAIL_REGEX }
 
+  # enum generates both instance and class methods(e.g, User.admin?)
   enum :role, admin: "admin", manager: "manager", employee: "employee", default: :employee
 
   validates :employee_code, presence: true, uniqueness: true
 
   has_secure_password
 
-  # Scopes
+  # Scopes (class-methods, belongs to class not it's instance)
   scope :active,     -> { where(is_active: true) }
   scope :inactive,   -> { where(is_active: false) }
   scope :admins,     -> { where(role: "admin") }
@@ -30,8 +31,18 @@ class User < ApplicationRecord
   scope :employees,  -> { where(role: "employee") }
   scope :recent,     -> { order(created_at: :desc) }
 
+  # Instance Methods (belongs to instance, not available for the class)
   def full_name
     username
+  end
+
+  # Class Methods (belongs to class itself, and not it's instance)
+  def self.active_count
+    active.count
+  end
+
+  def self.employee_count
+    employees.count
   end
 
   private
