@@ -30,6 +30,10 @@ class User < ApplicationRecord
   scope :employees,  -> { where(role: "employee") }
   scope :recent,     -> { order(created_at: :desc) }
 
+  def full_name
+    username
+  end
+
   private
 
   def assign_employee_code
