@@ -469,7 +469,6 @@
             flex-direction: column;
             width: 100%;
             background-color: var(--bg-light);
-            padding-top: 40px;
         }
 
         .home-navbar {
@@ -481,7 +480,7 @@
             justify-content: space-between;
             padding: 0 40px;
             position: sticky;
-            top: 40px;
+            top: 0;
             z-index: 100;
         }
 
@@ -1069,4 +1068,170 @@
             border-color: var(--color-accent);
             font-weight: 600;
         }
+
+        /* ============================
+           Auth Pages (Login & Signup)
+           ============================ */
+        .auth-page-section {
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: calc(100vh - 70px - 200px);
+            display: flex;
+            align-items: center;
+        }
+
+        .auth-page-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .auth-page-left {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .auth-page-right {
+            display: flex;
+            justify-content: center;
+        }
+
+        .auth-page-right .auth-card {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .auth-submit-btn {
+            width: 100%;
+            border-radius: 8px !important;
+            margin-top: 10px;
+        }
+
+        .auth-alt-btn {
+            width: 100%;
+            border-radius: 8px !important;
+            text-align: center;
+        }
+
+        /* ============================
+           Flash Messages
+           ============================ */
+        .flash-message {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            max-width: 600px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            animation: flashSlideIn 0.3s ease-out;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            box-shadow: 0 4px 16px rgba(61, 54, 48, 0.1);
+        }
+
+        .flash-notice {
+            background-color: rgba(107, 124, 77, 0.12);
+            color: var(--color-accent);
+            border: 1px solid rgba(107, 124, 77, 0.25);
+        }
+
+        .flash-alert {
+            background-color: rgba(181, 96, 74, 0.12);
+            color: var(--color-cta);
+            border: 1px solid rgba(181, 96, 74, 0.25);
+        }
+
+        .flash-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: inherit;
+            opacity: 0.6;
+            padding: 0 4px;
+            line-height: 1;
+            transition: opacity 0.2s;
+        }
+
+        .flash-close:hover {
+            opacity: 1;
+        }
+
+        @keyframes flashSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================
+           Form Error Messages
+           ============================ */
+        .auth-errors {
+            background-color: rgba(181, 96, 74, 0.08);
+            border: 1px solid rgba(181, 96, 74, 0.25);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+
+        .auth-errors h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-cta);
+            margin-bottom: 8px;
+        }
+
+        .auth-errors ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .auth-errors li {
+            font-size: 13px;
+            color: var(--color-cta);
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .auth-errors li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+        }
+
+        /* ============================
+           Responsive: Auth Pages
+           ============================ */
+        @media (max-width: 768px) {
+            .auth-page-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .auth-page-section {
+                padding: 40px 20px;
+            }
+
+            .hero-section {
+                grid-template-columns: 1fr;
+                padding: 40px 20px;
+            }
+        }
+
     

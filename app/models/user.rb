@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   before_save { self.email = email.downcase }
+  before_save { self.username = username.downcase }
   before_validation :assign_employee_code, on: :create
 
   has_many :tasks

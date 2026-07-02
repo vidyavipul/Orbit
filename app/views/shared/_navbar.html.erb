@@ -1,15 +1,22 @@
 <nav class="home-navbar">
-                <div class="logo-container" style="margin-bottom: 0;">
-                    <div class="logo-icon"></div>
-                    Orbit
-                </div>
-                <ul class="home-nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#about">About</a></li>
-                </ul>
-                <div style="display: flex; gap: 16px; align-items: center;">
-                    <a href="#" style="color: var(--color-text); text-decoration: none; font-size: 14px; font-weight: 500;" onclick="switchView('dashboard')">Log in</a>
-                    <button class="btn btn-primary btn-sm" style="border-radius: 20px;" onclick="switchView('dashboard')">Start Free</button>
-                </div>
-            </nav>
+  <div class="logo-container" style="margin-bottom: 0;">
+    <div class="logo-icon"></div>
+    <%= link_to "Orbit", root_path, style: "color: var(--color-text); text-decoration: none;" %>
+  </div>
+  <ul class="home-nav-links">
+    <li><%= link_to "Features", root_path(anchor: "features") %></li>
+    <li><%= link_to "Pricing", "#pricing" %></li>
+    <li><%= link_to "About", "#about" %></li>
+  </ul>
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <% if logged_in? %>
+      <span style="font-size: 14px; font-weight: 500; color: var(--color-text);">
+        <%= current_user.username %>
+      </span>
+      <%= link_to "Log out", logout_path, data: { turbo_method: :delete }, class: "btn btn-outline btn-sm", style: "border-radius: 20px;", id: "navbar-logout" %>
+    <% else %>
+      <%= link_to "Log in", login_path, style: "color: var(--color-text); text-decoration: none; font-size: 14px; font-weight: 500;", id: "navbar-login" %>
+      <%= link_to "Start Free", signup_path, class: "btn btn-primary btn-sm", style: "border-radius: 20px;", id: "navbar-signup" %>
+    <% end %>
+  </div>
+</nav>

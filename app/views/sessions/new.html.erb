@@ -1,0 +1,53 @@
+<% content_for(:title, "Log In — Orbit") %>
+
+<div class="home-view">
+  <%= render 'shared/navbar' %>
+
+  <section class="auth-page-section">
+    <div class="auth-page-container">
+      <div class="auth-page-left">
+        <div class="hero-tag">Welcome Back</div>
+        <h1 class="hero-title">Sign in to your workspace.</h1>
+        <p class="hero-subtitle">
+          Pick up right where you left off. Your projects, tasks, and team are waiting.
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat-item">
+            <div class="hero-stat-dot"></div> Secure login
+          </div>
+          <div class="hero-stat-item">
+            <div class="hero-stat-dot"></div> Instant access
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-page-right">
+        <div class="auth-card">
+          <h2 class="auth-card-title">Log In</h2>
+
+          <%= render 'shared/flash' %>
+
+          <%= form_with(url: login_path, scope: :session, local: true, id: "login-form") do |f| %>
+            <div class="auth-form-group">
+              <label for="session_login_identifier">Email Address or Username</label>
+              <%= f.text_field :login_identifier, class: "auth-form-control", placeholder: "Email or username", required: true, id: "session_login_identifier", autofocus: true %>
+            </div>
+
+            <div class="auth-form-group">
+              <label for="session_password">Password</label>
+              <%= f.password_field :password, class: "auth-form-control", placeholder: "Password", required: true, id: "session_password" %>
+            </div>
+
+            <%= f.submit "Sign In", class: "btn btn-cta auth-submit-btn", id: "login-submit" %>
+          <% end %>
+
+          <div class="auth-divider">or</div>
+
+          <%= link_to "Create new account", signup_path, class: "btn btn-outline auth-alt-btn", id: "goto-signup" %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%= render 'shared/footer' %>
+</div>

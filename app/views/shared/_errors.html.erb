@@ -1,0 +1,10 @@
+<% if obj.errors.any? %>
+  <div class="auth-errors" id="error-explanation">
+    <h3><%= pluralize(obj.errors.count, "error") %> prevented this action:</h3>
+    <ul>
+      <% obj.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
