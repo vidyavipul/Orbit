@@ -1,0 +1,46 @@
+<% content_for(:title, "Dashboard — Orbit") %>
+
+<div class="content-header">
+    <div>
+        <h1 class="page-title">Good morning, <%= current_user.username.capitalize %>.</h1>
+        <p class="page-subtitle">Here is what's happening with your team today.</p>
+    </div>
+    <div>
+        <button class="btn btn-primary">+ New Project</button>
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Users</h3>
+        <div class="value"><%= User.active_count %></div>
+    </div>
+    <div class="stat-card">
+        <h3>Active Projects</h3>
+        <div class="value">0</div>
+    </div>
+    <div class="stat-card">
+        <h3>Open Tasks</h3>
+        <div class="value">0</div>
+    </div>
+    <div class="stat-card">
+        <h3>Overdue Tasks</h3>
+        <div class="value alert">0</div>
+    </div>
+</div>
+
+<div class="dashboard-row">
+    <!-- Recent Projects -->
+    <div class="panel">
+        <div class="panel-title">Recent Projects</div>
+        <div class="table-container" style="border: none; margin-bottom: 0;">
+            <p style="color: var(--color-muted); font-size: 14px;">No projects created yet.</p>
+        </div>
+    </div>
+
+    <!-- My Tasks -->
+    <div class="panel">
+        <div class="panel-title">My Tasks</div>
+        <p style="color: var(--color-muted); font-size: 14px;">You have no assigned tasks.</p>
+    </div>
+</div>

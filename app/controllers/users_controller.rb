@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = "Welcome to the world of Orbit, you have been successfully signed up"
-      redirect_to root_path
+      redirect_to dashboard_path
     else
       render :new, status: :unprocessable_entity
     end
