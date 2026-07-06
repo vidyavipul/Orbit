@@ -1,2 +1,44 @@
-<h1>Projects#show</h1>
-<p>Find me in app/views/projects/show.html.erb</p>
+<% content_for(:title, "#{@project.title} — Orbit") %>
+
+<div class="content-header">
+  <div>
+    <h1 class="page-title"><%= @project.title %></h1>
+    <p class="page-subtitle"><%= @project.description %></p>
+  </div>
+  <% if current_user && (current_user.admin? || current_user.manager?) %>
+    <div>
+      <%= link_to "Edit Project", edit_project_path(@project), class: "btn btn-outline" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="dashboard-row">
+  <div class="panel" style="flex: 1;">
+    <div class="panel-title">Project Details</div>
+    <div class="meta-row" style="margin-bottom: 12px;">
+      <span class="meta-label">Status</span>
+      <span class="meta-value">
+        <span class="badge badge-<%= @project.status %>" style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; background: var(--color-background); border: 1px solid var(--color-border);"><%= @project.status.capitalize %></span>
+      </span>
+    </div>
+    <div class="meta-row" style="margin-bottom: 12px;">
+      <span class="meta-label">Deadline</span>
+      <span class="meta-value">
+        <%= @project.deadline&.strftime("%B %d, %Y") || "No Deadline" %>
+        <% if @project.overdue? %>
+          <span style="color: var(--color-cta); font-size: 12px; margin-left: 8px;">(Overdue)</span>
+        <% end %>
+      </span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-label">Created</span>
+      <span class="meta-value"><%= time_ago_in_words(@project.created_at) %> ago</span>
+    </div>
+  </div>
+
+  <div class="panel" style="flex: 2;">
+    <div class="panel-title">Tasks</div>
+    <p style="color: var(--color-text-light);">Tasks for this project will be listed here.</p>
+    <%# Will render tasks list here eventually %>
+  </div>
+</div>

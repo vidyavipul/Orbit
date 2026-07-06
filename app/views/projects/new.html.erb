@@ -1,2 +1,13 @@
-<h1>Projects#new</h1>
-<p>Find me in app/views/projects/new.html.erb</p>
+<% content_for(:title, "New Project — Orbit") %>
+
+<div class="content-header">
+  <div>
+    <h1 class="page-title">New Project</h1>
+    <p class="page-subtitle">Create a new project to start organizing tasks.</p>
+  </div>
+</div>
+
+<div class="panel" style="max-width: 600px;">
+  <% content_for :submit_label, "Create Project" %>
+  <%= render 'form', project: @project %>
+</div>

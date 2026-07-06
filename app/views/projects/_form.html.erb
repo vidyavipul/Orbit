@@ -1,0 +1,32 @@
+<%= render 'shared/errors', obj: project %>
+
+<%= form_with(model: project, local: true) do |f| %>
+  <div class="auth-form-group">
+    <%= f.label :title, "Project Title" %>
+    <%= f.text_field :title, class: "auth-form-control", placeholder: "Website Redesign", required: true %>
+  </div>
+
+  <div class="auth-form-group">
+    <%= f.label :description, "Description" %>
+    <%= f.text_area :description, class: "auth-form-control", placeholder: "Detailed description of the project...", rows: 4, required: true %>
+  </div>
+
+  <div class="auth-form-group">
+    <%= f.label :deadline, "Deadline" %>
+    <%= f.date_field :deadline, class: "auth-form-control", required: true %>
+  </div>
+
+  <div class="auth-form-group">
+    <%= f.label :status, "Status" %>
+    <%= f.select :status, Project.statuses.keys.map { |s| [s.capitalize, s] }, {}, class: "auth-form-control" %>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <%= f.submit yield(:submit_label).presence || "Save Project", class: "btn btn-primary" %>
+    <% unless project.new_record? %>
+      <%= link_to "Cancel", project_path(project), class: "btn btn-outline", style: "margin-left: 10px;" %>
+    <% else %>
+      <%= link_to "Cancel", projects_path, class: "btn btn-outline", style: "margin-left: 10px;" %>
+    <% end %>
+  </div>
+<% end %>

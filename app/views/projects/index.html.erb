@@ -1,2 +1,88 @@
-<h1>Projects#index</h1>
-<p>Find me in app/views/projects/index.html.erb</p>
+<% content_for(:title, "Projects — Orbit") %>
+
+<div class="content-header">
+  <div>
+    <h1 class="page-title">Projects</h1>
+    <p class="page-subtitle">Track high-level goals and ongoing projects.</p>
+  </div>
+  <% if current_user && (current_user.admin? || current_user.manager?) %>
+    <div>
+      <%= link_to "+ New Project", new_project_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="filters-bar">
+  <div class="filter-tabs">
+    <%= link_to "All Projects", projects_path(sort: params[:sort]), class: "filter-tab #{'active' if params[:filter].blank?}" %>
+    <%= link_to "Active", projects_path(filter: 'active', sort: params[:sort]), class: "filter-tab #{'active' if params[:filter] == 'active'}" %>
+    <%= link_to "Completed", projects_path(filter: 'completed', sort: params[:sort]), class: "filter-tab #{'active' if params[:filter] == 'completed'}" %>
+    <%= link_to "Overdue", projects_path(filter: 'overdue', sort: params[:sort]), class: "filter-tab #{'active' if params[:filter] == 'overdue'}" %>
+  </div>
+  
+  <%= form_with url: projects_path, method: :get, local: true, class: "search-form", style: "display: inline-block;" do |f| %>
+    <%= f.hidden_field :filter, value: params[:filter] %>
+    <%= f.hidden_field :sort, value: params[:sort] %>
+    <%= f.text_field :search, value: params[:search], placeholder: "Search projects...", class: "search-input" %>
+  <% end %>
+</div>
+
+<div class="table-container">
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Deadline</th>
+        <th style="text-align: right;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each do |project| %>
+        <tr>
+          <td><strong><%= project.title %></strong></td>
+          <td style="color: var(--color-muted);"><%= project.description.present? ? truncate(project.description, length: 50) : "-" %></td>
+          <td>
+            <%
+              status_class = "badge-success"
+              display_status = project.status.titleize
+              if project.overdue?
+                status_class = "badge-danger"
+                display_status = "Overdue"
+              elsif project.status == "completed"
+                status_class = "badge-success"
+              else
+                status_class = "badge-success"
+              end
+            %>
+            <span class="badge <%= status_class %>"><%= display_status %></span>
+          </td>
+          <td><%= project.deadline&.strftime("%b %d, %Y") || "No Deadline" %></td>
+          <td style="text-align: right; display: flex; justify-content: flex-end; gap: 8px;">
+            <%= link_to "View Tasks", project_path(project), class: "btn btn-outline btn-sm" %>
+            <% if current_user && (current_user.admin? || current_user.manager?) %>
+              <%= link_to "Edit", edit_project_path(project), class: "btn btn-outline btn-sm" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <% if @projects.empty? %>
+        <tr>
+          <td colspan="5" style="text-align: center; color: var(--color-muted); padding: 20px;">No projects found matching your criteria.</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="pagination" style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+  <div class="page-subtitle">
+    <% if @projects.any? %>
+      Showing <%= @projects.length %> of <%= @projects.total_entries %> projects
+    <% end %>
+  </div>
+  <div class="pagination-pages" style="display: flex; gap: 8px;">
+    <%= will_paginate @projects, container: false %>
+  </div>
+</div>

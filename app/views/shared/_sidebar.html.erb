@@ -10,13 +10,17 @@
       <% end %>
     </li>
     <li>
-      <div class="nav-item">📁 Projects</div>
+      <%= link_to projects_path, class: "nav-item #{current_page?(projects_path) || request.path.start_with?('/projects') ? 'active' : ''}" do %>
+        📁 Projects
+      <% end %>
     </li>
     <li>
       <div class="nav-item">✓ Tasks</div>
     </li>
     <li>
-      <div class="nav-item">👥 Team</div>
+      <%= link_to users_path, class: "nav-item #{current_page?(users_path) || request.path.start_with?('/users') ? 'active' : ''}" do %>
+        👥 Team
+      <% end %>
     </li>
   </ul>
   
