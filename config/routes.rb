@@ -42,4 +42,16 @@ Rails.application.routes.draw do
   put "projects/:id", to: "projects#update"
   patch "projects/:id", to: "projects#update"
   delete "projects/:id", to: "projects#destroy"
+
+  # Task CRUD routes (Shallow manually nested)
+  get "projects/:project_id/tasks", to: "tasks#index", as: :project_tasks
+  post "projects/:project_id/tasks", to: "tasks#create"
+  get "projects/:project_id/tasks/new", to: "tasks#new", as: :new_project_task
+
+  get "tasks", to: "tasks#index", as: :tasks
+  get "tasks/:id/edit", to: "tasks#edit", as: :edit_task
+  get "tasks/:id", to: "tasks#show", as: :task
+  put "tasks/:id", to: "tasks#update"
+  patch "tasks/:id", to: "tasks#update"
+  delete "tasks/:id", to: "tasks#destroy"
 end
