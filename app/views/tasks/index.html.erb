@@ -1,2 +1,83 @@
-<h1>Tasks#index</h1>
-<p>Find me in app/views/tasks/index.html.erb</p>
+<% page_title "Tasks" %>
+
+<div class="content-header">
+    <div>
+        <h1 class="page-title">Tasks</h1>
+        <p class="page-subtitle">Track and assign specific task objectives.</p>
+    </div>
+    <div>
+        <% if current_user.admin? || current_user.manager? %>
+            <% if @project %>
+                <%= link_to "+ New Task", new_project_task_path(@project), class: "btn btn-primary" %>
+            <% else %>
+                <%# For a global index without a project context, they might need to go to a project first %>
+                <button class="btn btn-primary" onclick="alert('Please select a project first to create a task.')">+ New Task</button>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+<div class="filters-bar">
+    <div class="filter-tabs">
+        <%= link_to "All Tasks", request.params.except(:filter), class: "filter-tab #{'active' unless params[:filter]}" %>
+        <%= link_to "Pending", request.params.merge(filter: 'pending'), class: "filter-tab #{'active' if params[:filter] == 'pending'}" %>
+        <%= link_to "Completed", request.params.merge(filter: 'completed'), class: "filter-tab #{'active' if params[:filter] == 'completed'}" %>
+        <%= link_to "Overdue", request.params.merge(filter: 'overdue'), class: "filter-tab #{'active' if params[:filter] == 'overdue'}" %>
+        <%= link_to "High Priority", request.params.merge(filter: 'high_priority'), class: "filter-tab #{'active' if params[:filter] == 'high_priority'}" %>
+    </div>
+    <%= form_with url: request.path, method: :get, local: true, class: "search-form", style: "display: flex;" do |f| %>
+        <% if params[:filter].present? %>
+            <%= hidden_field_tag :filter, params[:filter] %>
+        <% end %>
+        <%= text_field_tag :search, params[:search], class: "search-input", placeholder: "Search tasks..." %>
+    <% end %>
+</div>
+
+<div class="table-container">
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th width="40"><input type="checkbox" disabled></th>
+                <th>Task Title</th>
+                <th>Project</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th>Assignee</th>
+                <th style="text-align: right;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @tasks.each do |task| %>
+                <tr style="cursor: pointer;" onclick="if(event.target.tagName !== 'A' && event.target.tagName !== 'BUTTON' && event.target.tagName !== 'INPUT') window.location='<%= task_path(task) %>'">
+                    <td><input type="checkbox" <%= 'checked' if task.completed? %> disabled></td>
+                    <td style="<%= 'text-decoration: line-through; color: var(--color-muted);' if task.completed? %>">
+                        <strong><%= task.title %></strong>
+                    </td>
+                    <td style="color: var(--color-muted);"><%= task.project.title %></td>
+                    <td><%= priority_badge(task.priority) %></td>
+                    <td><%= status_badge(task) %></td>
+                    <td><%= format_date(task.due_date) %></td>
+                    <td><%= task.user.full_name %></td>
+                    <td style="text-align: right; display: flex; justify-content: flex-end; gap: 8px;">
+                        <% if current_user.admin? || current_user.manager? || (current_user.employee? && task.user_id == current_user.id) %>
+                            <%= link_to "Edit", edit_task_path(task), class: "btn btn-outline btn-sm" %>
+                        <% end %>
+                    </td>
+                </tr>
+            <% end %>
+            <% if @tasks.empty? %>
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 2rem; color: var(--color-muted);">No tasks found.</td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+<div class="pagination">
+    <div class="page-subtitle">Showing <%= @tasks.length %> tasks</div>
+    <div class="pagination-pages">
+        <%= will_paginate @tasks, renderer: WillPaginate::ActionView::LinkRenderer if @tasks.respond_to?(:total_pages) %>
+    </div>
+</div>

@@ -1,2 +1,100 @@
-<h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
+<% page_title @task.title %>
+
+<div class="breadcrumb">
+    <%= link_to "Projects", projects_path %> &gt;
+    <%= link_to @task.project.title, project_path(@task.project) %> &gt;
+    <span><%= @task.title %></span>
+</div>
+
+<div class="task-detail-container">
+    <!-- Left Main Pane -->
+    <div>
+        <div class="task-title-area">
+            <h1 class="page-title" style="font-size: 38px;"><%= @task.title %></h1>
+            <div class="task-badges">
+                <%= status_badge(@task) %>
+                <%= priority_badge(@task.priority) %>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h3>Description</h3>
+            <p class="task-description">
+                <%= @task.description %>
+            </p>
+        </div>
+
+        <div class="detail-section">
+            <h3>Comments (<%= @task.comments.count %>)</h3>
+            <div class="comment-list">
+                <% @task.comments.each do |comment| %>
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <div class="commenter">
+                                <div class="user-avatar" style="width: 24px; height: 24px; font-size: 10px;">
+                                    <%= user_initials(comment.user) %>
+                                </div>
+                                <%= comment.user.full_name %>
+                            </div>
+                            <div class="comment-time"><%= time_ago_in_words(comment.created_at) %> ago</div>
+                        </div>
+                        <div class="comment-body">
+                            <%= comment.body %>
+                        </div>
+                    </div>
+                <% end %>
+                <% if @task.comments.empty? %>
+                    <p style="color: var(--color-muted); font-size: 14px;">No comments yet. Start the conversation!</p>
+                <% end %>
+            </div>
+
+            <div class="comment-form">
+                <%= form_with model: [ @task, Comment.new ], url: '#', local: true do |f| %>
+                    <%= f.text_area :body, placeholder: "Write a comment...", required: true %>
+                    <%= f.submit "Post Comment", class: "btn btn-primary btn-sm" %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Sidebar Panel -->
+    <div class="sidebar-panel">
+        <div class="meta-row">
+            <div class="meta-label">Project</div>
+            <div class="meta-value">
+                <%= link_to @task.project.title, project_path(@task.project), style: "color: var(--color-accent); text-decoration: none; font-weight: 600;" %>
+            </div>
+        </div>
+        <div class="meta-row">
+            <div class="meta-label">Assigned To</div>
+            <div class="meta-value" style="display: flex; align-items: center; gap: 8px;">
+                <div class="user-avatar" style="width: 24px; height: 24px; font-size: 10px;">
+                    <%= user_initials(@task.user) %>
+                </div>
+                <%= @task.user.full_name %>
+            </div>
+        </div>
+        <div class="meta-row">
+            <div class="meta-label">Priority</div>
+            <div class="meta-value"><%= @task.priority.titleize %></div>
+        </div>
+        <div class="meta-row">
+            <div class="meta-label">Due Date</div>
+            <div class="meta-value"><%= format_date(@task.due_date) %></div>
+        </div>
+        <div class="meta-row">
+            <div class="meta-label">Created At</div>
+            <div class="meta-value"><%= format_date(@task.created_at) %></div>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+            <% if current_user.admin? || current_user.manager? || (current_user.employee? && @task.user_id == current_user.id) %>
+                <%= link_to "Edit Task", edit_task_path(@task), class: "btn btn-outline", style: "width: 100%; text-align: center; box-sizing: border-box;" %>
+            <% end %>
+            
+            <% if current_user.admin? %>
+                <%= button_to "Delete Task", task_path(@task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-outline", style: "width: 100%; color: var(--color-cta); border-color: rgba(181, 96, 74, 0.4); text-align: center;" %>
+            <% end %>
+        </div>
+    </div>
+</div>

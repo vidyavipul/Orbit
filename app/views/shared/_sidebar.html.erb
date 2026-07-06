@@ -15,7 +15,9 @@
       <% end %>
     </li>
     <li>
-      <div class="nav-item">✓ Tasks</div>
+      <%= link_to tasks_path, class: "nav-item #{current_page?(tasks_path) || request.path.start_with?('/tasks') ? 'active' : ''}" do %>
+        ✓ Tasks
+      <% end %>
     </li>
     <li>
       <%= link_to users_path, class: "nav-item #{current_page?(users_path) || request.path.start_with?('/users') ? 'active' : ''}" do %>

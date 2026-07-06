@@ -1,2 +1,18 @@
-<h1>Tasks#edit</h1>
-<p>Find me in app/views/tasks/edit.html.erb</p>
+<% page_title "Edit Task" %>
+
+<div class="breadcrumb">
+    <%= link_to "Projects", projects_path %> &gt;
+    <%= link_to @task.project.title, project_path(@task.project) %> &gt;
+    <%= link_to "Tasks", project_tasks_path(@task.project) %> &gt;
+    <%= link_to @task.title, task_path(@task) %> &gt;
+    <span>Edit</span>
+</div>
+
+<div class="content-header">
+  <h1 class="page-title">Edit Task</h1>
+</div>
+
+<div class="panel" style="max-width: 600px;">
+  <div class="panel-title">Task Details</div>
+  <%= render 'form' %>
+</div>

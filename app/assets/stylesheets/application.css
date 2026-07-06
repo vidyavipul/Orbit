@@ -80,6 +80,14 @@ body {
     flex-direction: column;
     padding: 30px 20px;
     flex-shrink: 0;
+    resize: horizontal;
+    overflow-x: hidden;
+    min-width: 60px;
+    max-width: 50vw;
+}
+
+.sidebar.collapsed {
+    display: none;
 }
 
 .logo-container {

@@ -1,2 +1,21 @@
-<h1>Tasks#new</h1>
-<p>Find me in app/views/tasks/new.html.erb</p>
+<% page_title "New Task" %>
+
+<div class="breadcrumb">
+    <%= link_to "Projects", projects_path %> &gt;
+    <% if @project %>
+      <%= link_to @project.title, project_path(@project) %> &gt;
+      <%= link_to "Tasks", project_tasks_path(@project) %> &gt;
+    <% else %>
+      <%= link_to "Tasks", tasks_path %> &gt;
+    <% end %>
+    <span>New Task</span>
+</div>
+
+<div class="content-header">
+  <h1 class="page-title">New Task</h1>
+</div>
+
+<div class="panel" style="max-width: 600px;">
+  <div class="panel-title">Task Details</div>
+  <%= render 'form' %>
+</div>
