@@ -1,0 +1,29 @@
+<% content_for(:title, "Team Directory — Orbit") %>
+
+<div class="content-header">
+  <div>
+    <h1 class="page-title">Team Directory</h1>
+    <p class="page-subtitle">View company employees and their roles.</p>
+  </div>
+</div>
+
+<div class="team-grid">
+  <% @users.each do |user| %>
+    <div class="member-card">
+      <div class="member-avatar"><%= user.username.chars.first.upcase %></div>
+      <div class="member-name"><%= user.username %></div>
+      <div class="member-code"><%= user.email %></div>
+      <div class="member-role role-<%= user.role || 'employee' %>"><%= user.role&.capitalize || 'Employee' %></div>
+      <div class="member-status">
+        <div class="status-dot <%= user.active? ? '' : 'inactive' %>"></div>
+        <%= user.active? ? 'Active' : 'Inactive' %>
+      </div>
+      <div class="member-actions">
+        <%= link_to "View Profile", user_path(user), class: "btn btn-outline btn-sm" %>
+        <% if current_user == user || (current_user && current_user.admin?) %>
+          <%= link_to "Edit", edit_user_path(user), class: "btn btn-outline btn-sm" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

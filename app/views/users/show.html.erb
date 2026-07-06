@@ -1,0 +1,36 @@
+<% content_for(:title, "#{@user.username} — Orbit") %>
+
+<div class="content-header">
+  <div>
+    <h1 class="page-title"><%= @user.username %></h1>
+    <p class="page-subtitle">Member Profile</p>
+  </div>
+  <% if current_user == @user || (current_user && current_user.admin?) %>
+    <div>
+      <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-outline" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="dashboard-row">
+  <div class="panel">
+    <div class="panel-title">Profile Information</div>
+    <div class="meta-row" style="margin-bottom: 12px;">
+      <span class="meta-label">Email</span>
+      <span class="meta-value"><%= @user.email %></span>
+    </div>
+    <div class="meta-row" style="margin-bottom: 12px;">
+      <span class="meta-label">Role</span>
+      <span class="meta-value"><%= @user.role&.capitalize || 'Employee' %></span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-label">Status</span>
+      <span class="meta-value">
+        <div class="member-status" style="margin-bottom: 0;">
+          <div class="status-dot <%= @user.active? ? '' : 'inactive' %>"></div>
+          <%= @user.active? ? 'Active' : 'Inactive' %>
+        </div>
+      </span>
+    </div>
+  </div>
+</div>

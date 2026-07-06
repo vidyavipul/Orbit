@@ -1,0 +1,30 @@
+<%= render 'shared/errors', obj: user %>
+
+<%= form_with(model: user, url: (local_assigns[:url] || nil), local: true) do |f| %>
+  <div class="auth-form-group">
+    <%= f.label :username, "Username" %>
+    <%= f.text_field :username, class: "auth-form-control", placeholder: "Username", required: true %>
+  </div>
+
+  <div class="auth-form-group">
+    <%= f.label :email, "Email Address" %>
+    <%= f.email_field :email, class: "auth-form-control", placeholder: "you@company.com", required: true %>
+  </div>
+
+  <div class="auth-form-group">
+    <%= f.label :password, user.new_record? ? "Password" : "Password (leave blank to keep current)" %>
+    <%= f.password_field :password, class: "auth-form-control", placeholder: "••••••••", required: user.new_record? %>
+  </div>
+
+  <div class="auth-form-group">
+    <%= f.label :password_confirmation, "Confirm Password" %>
+    <%= f.password_field :password_confirmation, class: "auth-form-control", placeholder: "••••••••", required: user.new_record? %>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <%= f.submit yield(:submit_label).presence || "Save Profile", class: "btn btn-primary", id: (user.new_record? ? "signup-submit" : nil) %>
+    <% unless user.new_record? %>
+      <%= link_to "Cancel", user_path(user), class: "btn btn-outline", style: "margin-left: 10px;" %>
+    <% end %>
+  </div>
+<% end %>

@@ -20,13 +20,13 @@
     </li>
   </ul>
   
-  <div class="sidebar-user">
+  <%= link_to edit_user_path(current_user), class: "sidebar-user", style: "text-decoration: none; color: inherit; cursor: pointer;" do %>
     <div class="user-avatar"><%= user_initials(current_user) %></div>
     <div class="user-info">
       <h4><%= current_user.full_name %></h4>
       <p><%= current_user.role.capitalize %></p>
     </div>
-  </div>
+  <% end %>
   
   <div style="margin-top: 20px; text-align: center;">
     <%= link_to "Log out", logout_path, data: { turbo_method: :delete }, class: "btn btn-outline", style: "width: 100%; border-radius: 6px;" %>
