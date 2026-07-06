@@ -5,8 +5,6 @@
     <% if @project %>
       <%= link_to @project.title, project_path(@project) %> &gt;
       <%= link_to "Tasks", project_tasks_path(@project) %> &gt;
-    <% else %>
-      <%= link_to "Tasks", tasks_path %> &gt;
     <% end %>
     <span>New Task</span>
 </div>

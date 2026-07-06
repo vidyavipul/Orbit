@@ -1,4 +1,4 @@
-<% content_for(:title, "Dashboard — Orbit") %>
+<% page_title "Dashboard — Orbit" %>
 
 <div class="content-header">
     <div>
@@ -47,15 +47,9 @@
                     </thead>
                     <tbody>
                         <% @recent_projects.each do |project| %>
-                            <tr>
-                                <td><strong><%= link_to project.title, project_path(project), style: "color: inherit; text-decoration: none;" %></strong></td>
-                                <td>
-                                    <% if project.active? %>
-                                        <span class="badge badge-success">Active</span>
-                                    <% else %>
-                                        <span class="badge badge-secondary"><%= project.status.titleize %></span>
-                                    <% end %>
-                                </td>
+                            <tr style="cursor: pointer;" onclick="window.location='<%= project_path(project) %>'">
+                                <td><strong><%= project.title %></strong></td>
+                                <td><%= project_status_badge(project) %></td>
                                 <td><%= format_date(project.deadline) %></td>
                             </tr>
                         <% end %>
@@ -74,10 +68,10 @@
             <ul class="checklist">
                 <% @my_tasks.each do |task| %>
                     <li class="checklist-item">
-                        <input type="checkbox" id="chk-<%= task.id %>" onclick="window.location='<%= task_path(task) %>'">
+                        <input type="checkbox" id="chk-<%= task.id %>" disabled>
                         <div>
-                            <label for="chk-<%= task.id %>" style="font-weight: 500; cursor: pointer;" onclick="window.location='<%= task_path(task) %>'"><%= task.title %></label>
-                            <div class="task-meta"><%= task.project.title %> • <%= priority_badge(task.priority) %> Priority</div>
+                            <%= link_to task.title, task_path(task), style: "font-weight: 500; color: inherit; text-decoration: none;" %>
+                            <div class="task-meta"><%= task.project.title %> • <%= task.priority.titleize %> Priority</div>
                         </div>
                     </li>
                 <% end %>

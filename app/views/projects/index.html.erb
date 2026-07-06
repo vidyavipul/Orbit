@@ -1,11 +1,11 @@
-<% content_for(:title, "Projects — Orbit") %>
+<% page_title "Projects — Orbit" %>
 
 <div class="content-header">
   <div>
     <h1 class="page-title">Projects</h1>
     <p class="page-subtitle">Track high-level goals and ongoing projects.</p>
   </div>
-  <% if current_user && (current_user.admin? || current_user.manager?) %>
+  <% if current_user.admin? || current_user.manager? %>
     <div>
       <%= link_to "+ New Project", new_project_path, class: "btn btn-primary" %>
     </div>
@@ -20,7 +20,7 @@
     <%= link_to "Overdue", projects_path(filter: 'overdue', sort: params[:sort]), class: "filter-tab #{'active' if params[:filter] == 'overdue'}" %>
   </div>
   
-  <%= form_with url: projects_path, method: :get, local: true, class: "search-form", style: "display: inline-block;" do |f| %>
+  <%= form_with url: projects_path, method: :get, local: true, style: "display: inline-block;" do |f| %>
     <%= f.hidden_field :filter, value: params[:filter] %>
     <%= f.hidden_field :sort, value: params[:sort] %>
     <%= f.text_field :search, value: params[:search], placeholder: "Search projects...", class: "search-input" %>
@@ -41,27 +41,13 @@
     <tbody>
       <% @projects.each do |project| %>
         <tr>
-          <td><strong><%= project.title %></strong></td>
-          <td style="color: var(--color-muted);"><%= project.description.present? ? truncate(project.description, length: 50) : "-" %></td>
-          <td>
-            <%
-              status_class = "badge-success"
-              display_status = project.status.titleize
-              if project.overdue?
-                status_class = "badge-danger"
-                display_status = "Overdue"
-              elsif project.status == "completed"
-                status_class = "badge-success"
-              else
-                status_class = "badge-success"
-              end
-            %>
-            <span class="badge <%= status_class %>"><%= display_status %></span>
-          </td>
-          <td><%= project.deadline&.strftime("%b %d, %Y") || "No Deadline" %></td>
+          <td><strong><%= link_to project.title, project_path(project), style: "color: inherit; text-decoration: none;" %></strong></td>
+          <td style="color: var(--color-muted);"><%= truncate_text(project.description, length: 50) %></td>
+          <td><%= project_status_badge(project) %></td>
+          <td><%= format_date(project.deadline) %></td>
           <td style="text-align: right; display: flex; justify-content: flex-end; gap: 8px;">
-            <%= link_to "View Tasks", project_path(project), class: "btn btn-outline btn-sm" %>
-            <% if current_user && (current_user.admin? || current_user.manager?) %>
+            <%= link_to "View Tasks", project_tasks_path(project), class: "btn btn-outline btn-sm" %>
+            <% if current_user.admin? || current_user.manager? %>
               <%= link_to "Edit", edit_project_path(project), class: "btn btn-outline btn-sm" %>
             <% end %>
           </td>
@@ -76,13 +62,13 @@
   </table>
 </div>
 
-<div class="pagination" style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+<div class="pagination">
   <div class="page-subtitle">
-    <% if @projects.any? %>
+    <% if @projects.respond_to?(:total_entries) && @projects.any? %>
       Showing <%= @projects.length %> of <%= @projects.total_entries %> projects
     <% end %>
   </div>
-  <div class="pagination-pages" style="display: flex; gap: 8px;">
-    <%= will_paginate @projects, container: false %>
-  </div>
+  <% if @projects.respond_to?(:total_pages) && @projects.total_pages > 1 %>
+    <%= will_paginate @projects, renderer: OrbitPaginationRenderer %>
+  <% end %>
 </div>

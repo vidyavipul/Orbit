@@ -199,6 +199,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    padding-left: 36px;
 }
 
 .page-title {
@@ -363,6 +364,11 @@ body {
 .badge-danger {
     background-color: rgba(181, 96, 74, 0.12);
     color: var(--color-cta);
+}
+
+.badge-secondary {
+    background-color: var(--bg-sidebar);
+    color: var(--color-muted);
 }
 
 /* Columns layout for Dashboard */
@@ -1041,7 +1047,7 @@ body {
 
 .pagination {
     display: flex;
-    justify-content: justify;
+    justify-content: space-between;
     align-items: center;
     margin-top: 30px;
     padding-top: 20px;
@@ -1053,18 +1059,26 @@ body {
     gap: 6px;
 }
 
+.pagination-pages a,
+.pagination-pages span {
+    text-decoration: none;
+    color: var(--color-text);
+}
+
 .pagination-btn {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     border: 1px solid var(--color-border);
     background-color: transparent;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: 13px;
     cursor: pointer;
     transition: all 0.2s;
+    text-decoration: none;
+    color: var(--color-text);
 }
 
 .pagination-btn:hover {
@@ -1076,6 +1090,33 @@ body {
     color: white;
     border-color: var(--color-accent);
     font-weight: 600;
+}
+
+.pagination-btn.disabled {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Hamburger toggle button */
+.hamburger-btn {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--color-text);
+    z-index: 1000;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.hamburger-btn:hover {
+    background: var(--color-border);
 }
 
 /* ============================

@@ -33,7 +33,7 @@
       <%= render 'shared/sidebar' %>
       
       <main class="main-content" style="position: relative;">
-        <button onclick="document.querySelector('.sidebar').classList.toggle('collapsed')" style="position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--color-muted); z-index: 10;" title="Toggle Sidebar">☰</button>
+        <button class="hamburger-btn" style="position: absolute; top: 15px; left: 15px;" onclick="document.querySelector('.sidebar').classList.toggle('collapsed')" title="Toggle Sidebar">☰</button>
         <%= yield %>
       </main>
     </div>

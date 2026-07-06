@@ -51,7 +51,7 @@ class TasksController < ApplicationController
       @tasks = @tasks.order(created_at: :desc)
     end
 
-    @tasks = @tasks.paginate(page: params[:page], per_page: 10) if @tasks.respond_to?(:paginate)
+    @tasks = @tasks.paginate(page: params[:page], per_page: 5) if @tasks.respond_to?(:paginate)
   end
 
   def show

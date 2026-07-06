@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
       @projects = @projects.latest
     end
 
-    @projects = @projects.paginate(page: params[:page], per_page: 10)
+    @projects = @projects.paginate(page: params[:page], per_page: 5)
   end
 
   def show
