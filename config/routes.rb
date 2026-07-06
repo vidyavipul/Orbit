@@ -54,4 +54,11 @@ Rails.application.routes.draw do
   put "tasks/:id", to: "tasks#update"
   patch "tasks/:id", to: "tasks#update"
   delete "tasks/:id", to: "tasks#destroy"
+
+  # Comment CRUD routes (Shallow manually nested)
+  post "tasks/:task_id/comments", to: "comments#create", as: :task_comments
+  get "comments/:id/edit", to: "comments#edit", as: :edit_comment
+  put "comments/:id", to: "comments#update"
+  patch "comments/:id", to: "comments#update"
+  delete "comments/:id", to: "comments#destroy", as: :comment
 end
