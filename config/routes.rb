@@ -32,4 +32,14 @@ Rails.application.routes.draw do
   put "users/:id", to: "users#update"
   patch "users/:id", to: "users#update"
   delete "users/:id", to: "users#destroy"
+
+  # Project CRUD routes
+  get "projects", to: "projects#index", as: :projects
+  post "projects", to: "projects#create"
+  get "projects/new", to: "projects#new", as: :new_project
+  get "projects/:id/edit", to: "projects#edit", as: :edit_project
+  get "projects/:id", to: "projects#show", as: :project
+  put "projects/:id", to: "projects#update"
+  patch "projects/:id", to: "projects#update"
+  delete "projects/:id", to: "projects#destroy"
 end
