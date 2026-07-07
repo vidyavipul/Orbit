@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  layout "workspace", except: [:new, :create]
+  layout "workspace", except: [ :new, :create ]
   before_action :require_login, except: [ :new, :create ]
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
   before_action :authorize_user, only: [ :edit, :update, :destroy ]
