@@ -1,6 +1,6 @@
 <% flash.each do |type, message| %>
-  <div class="flash-message flash-<%= type %>" id="flash-<%= type %>">
+  <div class="flash-message flash-<%= type %>" id="flash-<%= type %>" data-controller="dismissible">
     <span class="flash-text"><%= message %></span>
-    <button class="flash-close" onclick="this.parentElement.remove()" aria-label="Dismiss">&times;</button>
+    <button class="flash-close" data-action="dismissible#dismiss" aria-label="Dismiss">&times;</button>
   </div>
 <% end %>

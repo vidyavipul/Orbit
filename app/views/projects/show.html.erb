@@ -53,10 +53,10 @@
     </thead>
     <tbody>
       <% @project.tasks.order(created_at: :desc).each do |task| %>
-        <tr style="cursor: pointer;" onclick="if(event.target.tagName !== 'A' && event.target.tagName !== 'INPUT') window.location='<%= task_path(task) %>'">
+        <tr>
           <td><input type="checkbox" <%= 'checked' if task.completed? %> disabled></td>
           <td style="<%= 'text-decoration: line-through; color: var(--color-muted);' if task.completed? %>">
-            <strong><%= task.title %></strong>
+            <strong><%= link_to task.title, task_path(task), class: "table-link" %></strong>
           </td>
           <td><%= priority_badge(task.priority) %></td>
           <td><%= status_badge(task) %></td>

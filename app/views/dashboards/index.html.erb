@@ -47,8 +47,8 @@
                     </thead>
                     <tbody>
                         <% @recent_projects.each do |project| %>
-                            <tr style="cursor: pointer;" onclick="window.location='<%= project_path(project) %>'">
-                                <td><strong><%= project.title %></strong></td>
+                            <tr>
+                                <td><strong><%= link_to project.title, project_path(project), class: "table-link" %></strong></td>
                                 <td><%= project_status_badge(project) %></td>
                                 <td><%= format_date(project.deadline) %></td>
                             </tr>
