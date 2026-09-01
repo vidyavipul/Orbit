@@ -46,11 +46,23 @@ Follow these steps to run Orbit locally:
 4. **Visit the app:**
    Open your browser and navigate to `http://localhost:3000`.
 
-## 🔒 Default Accounts (If using db:seed)
+### Environment variables
 
-* **Admin**: `admin@example.com` / `Password123!`
-* **Manager**: `manager@example.com` / `Password123!`
-* **Employee**: `employee@example.com` / `Password123!`
+Database credentials are configuration, not source code. Orbit reads local PostgreSQL settings from `POSTGRES_HOST`, `POSTGRES_PORT`, `POSTGRES_USER`, and `POSTGRES_PASSWORD`. Production uses the hosting provider's `DATABASE_URL`.
+
+Use [`.env.example`](.env.example) as the variable list for your shell, environment manager, or hosting platform. Rails does not load `.env` files by itself, and real values must never be committed.
+
+Production also requires `RAILS_MASTER_KEY` and `APP_HOST`. The optional `SOLID_QUEUE_IN_PUMA=true` setting runs the background-job supervisor with the web process, which is suitable for an initial small deployment.
+
+## 🔒 Local demo accounts
+
+Running `db:seed` outside production rebuilds the local database with synthetic demo data. These credentials are never created by production seeds:
+
+* **Admin**: `admin@orbit.com` / `password123`
+* **Manager**: `marcus@orbit.com` / `password123`
+* **Employee**: `employee1@orbit.com` / `password123`
+
+Production seeds never delete data. An initial admin is created only when the three `ORBIT_ADMIN_*` variables documented in [`.env.example`](.env.example) are present, and an existing account is never overwritten.
 
 ---
 <div align="center">
