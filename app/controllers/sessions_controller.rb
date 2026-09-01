@@ -1,4 +1,9 @@
 class SessionsController < ApplicationController
+  rate_limit to: 10,
+             within: 3.minutes,
+             only: :create,
+             with: -> { redirect_to login_path, alert: "Too many login attempts. Try again later." }
+
   def new
   end
 
@@ -19,16 +24,5 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     flash[:notice] = "You have been logged out successfully"
     redirect_to root_path
-  end
-
-  # Handles GET /logout
-  def logout_via_get
-    if logged_in?
-      session[:user_id] = nil
-      flash[:notice] = "You have been logged out successfully"
-      redirect_to root_path
-    else
-      redirect_to login_path
-    end
   end
 end

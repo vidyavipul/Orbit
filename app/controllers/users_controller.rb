@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
   layout "workspace", except: [ :new, :create ]
+  rate_limit to: 5,
+             within: 10.minutes,
+             only: :create,
+             with: -> { redirect_to signup_path, alert: "Too many signup attempts. Try again later." }
+
   before_action :require_login, except: [ :new, :create ]
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
   before_action :authorize_user, only: [ :edit, :update, :destroy ]
+
   def new
     @user = User.new
   end
